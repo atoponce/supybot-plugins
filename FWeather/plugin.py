@@ -30,7 +30,6 @@
 
 ###
 
-import math
 from supybot.commands import *
 import supybot.ircutils as ircutils
 import supybot.callbacks as callbacks
