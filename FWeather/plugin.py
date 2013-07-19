@@ -86,7 +86,7 @@ class FWeather(callbacks.Plugin):
             try:
                 w = thefuckingweather.get_weather(text)
                 location = w['location']
-                f_temp = self._color(w['current']['temperature'], 'f')
+                f_temp = self._color(float(w['current']['temperature']), 'f')
                 c_temp = self._color(round((5.0/9.0)*(w['current']['temperature']-32), 1), 'c')
                 weather = w['current']['weather'][0]
                 remark = w['current']['remark']
