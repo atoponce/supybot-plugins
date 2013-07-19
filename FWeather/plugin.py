@@ -72,9 +72,9 @@ class FWeather(callbacks.Plugin):
 
         # return
         if u == 'f':    # no need to convert back
-            return ircutils.mircColor(deg, color)
+            return ircutils.mircColor(int(deg), color)
         elif u == 'c':    # convert back
-            return ircutils.mircColor((deg - 32) * 5/9, color)
+            return ircutils.mircColor(int((deg - 32) * 5/9), color)
 
     def fw(self, irc, msg, args, text):
         """<text>
@@ -87,7 +87,7 @@ class FWeather(callbacks.Plugin):
                 w = thefuckingweather.get_weather(text)
                 location = w['location']
                 f_temp = self._color(w['current']['temperature'], 'f')
-                c_temp = self._color(int(round((5.0/9.0)*(w['current']['temperature']-32), 1)), 'c')
+                c_temp = self._color(round((5.0/9.0)*(w['current']['temperature']-32), 1), 'c')
                 weather = w['current']['weather'][0]
                 remark = w['current']['remark']
                 comment = "{0}: {1}°F, {2}°C?! {3}! ({4})".format(location, f_temp, c_temp, weather, remark)
