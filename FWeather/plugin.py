@@ -85,12 +85,12 @@ class FWeather(callbacks.Plugin):
         if text:
             try:
                 w = thefuckingweather.get_weather(text)
-                location = w['location']
+                location = ircutils.mircColor(w['location'], 'white')
                 f_temp = self._color(w['current']['temperature'], 'f')
                 c_temp = self._color(round((5.0/9.0)*(w['current']['temperature']-32), 1), 'c')
                 weather = w['current']['weather'][0]
                 remark = w['current']['remark']
-                comment = "{0}: {1}, {2}?! {3}! ({4})".format(ircutils.mircColor(location, 'white'), f_temp, c_temp, weather, remark)
+                comment = "{0}: {1}, {2}?! {3}! ({4})".format(location, f_temp, c_temp, weather, remark)
             except thefuckingweather.LocationError:
                 comment = "I CAN'T FIND THAT SHIT!"
             except thefuckingweather.ParseError:
