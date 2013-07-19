@@ -41,6 +41,41 @@ class FWeather(callbacks.Plugin):
     This plugin has one command to return the weather from
     http://thefuckingweather.com.
     """
+    
+    def _color(self, deg, u):
+        """Colorize the temperature. Use the same scale as
+        https://github.com/reticulatingspline/Supybot-Weather to match that
+        plugin, in case it is also loaded. Code copyright spline, with my
+        modifications."""
+
+        # first, convert into F so we only have one table.
+        if u == 'c':   # celcius, convert to farenheit, make float
+            deg = deg * 9.0/5.0 + 32
+
+        # determine color
+        if deg < 10.0:
+            color = 'light blue'
+        elif 10.0 <= deg <= 32.0:
+            color = 'teal'
+        elif 32.1 <= deg <= 50.0:
+            color = 'blue'
+        elif 50.1 <= deg <= 60.0:
+            color = 'light green'
+        elif 60.1 <= deg <= 70.0:
+            color = 'green'
+        elif 70.1 <= deg <= 80.0:
+            color = 'yellow'
+        elif 80.1 <= deg <= 90.0:
+            color = 'orange'
+        else:
+            color = 'red'
+
+        # return
+        if u == 'f':    # no need to convert back
+            return ircutils.mircColor(deg, color)
+        elif u == 'c':    # convert back
+            return ircutils.mircColor((deg - 32) * 5/9, color)
+
     def fw(self, irc, msg, args, text):
         """<text>
 
@@ -51,8 +86,10 @@ class FWeather(callbacks.Plugin):
             try:
                 w = thefuckingweather.get_weather(text)
                 location = w['location']
-                f_temp = w['current']['temperature']
-                c_temp = round((5.0/9.0)*(f_temp-32), 1)
+                #f_temp = float(w['current']['temperature'])
+                #c_temp = round((5.0/9.0)*(f_temp-32), 1)
+                f_temp = self._color(w['current']['temperature'], 'f')
+                c_temp = self._color(round((5.0/9.0)*(w['current']['temperature']-32), 1), 'c')
                 weather = w['current']['weather'][0]
                 remark = w['current']['remark']
                 comment = "{0}: {1}°F, {2}°C?! {3}! ({4})".format(location, f_temp, c_temp, weather, remark)
