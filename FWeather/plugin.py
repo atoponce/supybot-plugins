@@ -76,6 +76,8 @@ class FWeather(callbacks.Plugin):
         elif u == 'c':    # convert back
             return ircutils.mircColor("{0}°C".format((deg - 32) * 5/9), color)
 
+    ### FIXME
+    #def fw(self, irc, msg, args, opts, text):
     def fw(self, irc, msg, args, text):
         """<text>
 
@@ -85,6 +87,21 @@ class FWeather(callbacks.Plugin):
         if text:
             try:
                 w = thefuckingweather.get_weather(text)
+                ### FIXME
+                #if opts:
+                #    for (key, val) in opts:
+                #        if key == 'metric':
+                #            unit = 'c'
+                #        else:
+                #            unit = 'f'
+                #        if key == 'forecast':
+                #            forecast = {}
+                #            f = w['forecast']
+                #            for k,v in forecast:
+                #                if k == 'high' or k == 'low':
+                #                    forecast[k] = self._color(v,unit)
+                #                else:
+                #                    forecast[k] = v
                 location = ircutils.mircColor(w['location'], 'white')
                 f_temp = self._color(w['current']['temperature'], 'f')
                 c_temp = self._color(round((5.0/9.0)*(w['current']['temperature']-32), 1), 'c')
@@ -97,7 +114,12 @@ class FWeather(callbacks.Plugin):
                 comment = "I CAN'T PARSE THE FUCKING WEATHER!"
 
         irc.reply(comment)
+        ### FIXME
+        #if forecast:
+        #    irc.reply("{0}/{1}".format())
 
+    ### FIXME
+    #fw = wrap(fw, [getopts({'forecast':'','metric':''}), ['text'])
     fw = wrap(fw, ['text'])
 
 Class = FWeather
