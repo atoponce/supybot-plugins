@@ -88,20 +88,14 @@ class FWeather(callbacks.Plugin):
             try:
                 w = thefuckingweather.get_weather(text)
                 ### FIXME
-                #if opts:
-                #    for (key, val) in opts:
+                if opts:
+                    for (key, val) in opts:
                 #        if key == 'metric':
                 #            unit = 'c'
                 #        else:
                 #            unit = 'f'
-                #        if key == 'forecast':
-                #            forecast = {}
-                #            f = w['forecast']
-                #            for k,v in forecast:
-                #                if k == 'high' or k == 'low':
-                #                    forecast[k] = self._color(v,unit)
-                #                else:
-                #                    forecast[k] = v
+                        if key == 'forecast':
+                            f = w['forecast']
                 location = ircutils.mircColor(w['location'], 'white')
                 f_temp = self._color(w['current']['temperature'], 'f')
                 c_temp = self._color(round((5.0/9.0)*(w['current']['temperature']-32), 1), 'c')
@@ -114,9 +108,14 @@ class FWeather(callbacks.Plugin):
                 comment = "I CAN'T PARSE THE FUCKING WEATHER!"
 
         irc.reply(comment)
-        ### FIXME
         #if forecast:
-        #    irc.reply("{0}/{1}".format())
+        #    irc.reply("{0} {1}: {2} ({3}/{4}) | {5}: {6} ({7}/{8}) | {9}: {10} ({11}/{12}) | {13}: {14} ({15}/{16})".format(
+        #        ircutils.mircColor('FUCKING FORECAST:','white'),
+        #        f[0]['day'], f[0]['weather'], self._color(f[0]['high'], unit), self._color(f[0]['low'], unit),
+        #        f[1]['day'], f[1]['weather'], self._color(f[1]['high'], unit), self._color(f[1]['low'], unit),
+        #        f[2]['day'], f[2]['weather'], self._color(f[2]['high'], unit), self._color(f[2]['low'], unit),
+        #        f[3]['day'], f[3]['weather'], self._color(f[3]['high'], unit), self._color(f[3]['low'], unit),
+        #    )
 
     ### FIXME
     #fw = wrap(fw, [getopts({'forecast':'','metric':''}), ['text'])
