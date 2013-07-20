@@ -88,14 +88,14 @@ class FWeather(callbacks.Plugin):
             try:
                 w = thefuckingweather.get_weather(text)
                 ### FIXME
-                if opts:
-                    for (key, val) in opts:
+                #if opts:
+                #    for (key, val) in opts:
                 #        if key == 'metric':
                 #            unit = 'c'
                 #        else:
                 #            unit = 'f'
-                        if key == 'forecast':
-                            f = w['forecast']
+                #        if key == 'forecast':
+                #            f = w['forecast']
                 location = ircutils.mircColor(w['location'], 'white')
                 f_temp = self._color(w['current']['temperature'], 'f')
                 c_temp = self._color(round((5.0/9.0)*(w['current']['temperature']-32), 1), 'c')
